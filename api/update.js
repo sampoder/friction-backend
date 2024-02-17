@@ -26,7 +26,7 @@ export default async function handler(req, res) {
     return res.json({ success: false });
   }
   
-  await prisma.user.update({
+  user = await prisma.user.update({
     where: { id: user.id },
     data: { email, image, name },
   })
