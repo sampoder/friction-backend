@@ -40,7 +40,7 @@ export default async function handler(req, res) {
 
   await resend.emails.send({
     from: 'onboarding@resend.dev',
-    to: user.email,
+    to: "sam.r.poder@gmail.com" || user.email,
     subject: 'Login to Friction',
     html: `Your code to login is <i>${session.id}</i>.`
   });
