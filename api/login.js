@@ -38,7 +38,7 @@ export default async function handler(req, res) {
 
   let session = user.sessions[user.sessions.length - 1];
 
-  resend.emails.send({
+  await resend.emails.send({
     from: 'onboarding@resend.dev',
     to: user.email,
     subject: 'Login to Friction',
