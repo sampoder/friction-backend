@@ -2,7 +2,7 @@ import prisma from "../lib/prisma";
 import { groupStatus } from "./log";
 
 export default async function handler(req, res) {
-  let { session } = req.query;
+  let { session } = req.body;
   let user = (
     await prisma.session.findUnique({
       where: {
@@ -20,7 +20,11 @@ export default async function handler(req, res) {
         },
       },
     })
-  ).user;
+  )?.user;
+  
+  if(!user){
+    return res.json({ success: false });
+  }
 
   res.json(await groupStatus(user.group));
 }

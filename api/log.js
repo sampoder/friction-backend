@@ -56,12 +56,13 @@ export async function groupStatus(group){
     group,
     sum,
     blame,
-    friction
+    friction,
+    success: true
   }
 }
 
 export default async function handler(req, res) {
-  let { session, distance } = req.query;
+  let { session, distance } = req.body;
   let user = (
     await prisma.session.findUnique({
       where: {
@@ -79,7 +80,11 @@ export default async function handler(req, res) {
         },
       },
     })
-  ).user;
+  )?.user;
+  
+  if(!user){
+    return res.json({ success: false });
+  }
 
   let log = await prisma.scroll.create({
     data: { distance: parseInt(distance), userId: user.id },

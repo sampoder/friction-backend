@@ -4,7 +4,10 @@ import { Resend } from 'resend';
 const resend = new Resend(process.env.RESEND);
 
 export default async function handler(req, res) {
-  let { email } = req.query;
+  let { email } = req.body;
+  if(!email){
+    return res.json({ success: false });
+  }
   let user = await prisma.user.upsert({
     where: {
       email,
@@ -42,5 +45,5 @@ export default async function handler(req, res) {
     html: `Your code to login is <i>${session.id}</i>.`
   });
 
-  res.json({ success: true });
+  return res.json({ success: true });
 }

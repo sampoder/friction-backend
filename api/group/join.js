@@ -2,7 +2,7 @@ import prisma from "../../lib/prisma";
 import { groupStatus } from "../log";
 
 export default async function handler(req, res) {
-  let { session, code } = req.query;
+  let { session, code } = req.body;
   let user = (
     await prisma.session.findUnique({
       where: {
