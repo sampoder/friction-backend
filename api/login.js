@@ -1,4 +1,7 @@
 import prisma from "../lib/prisma";
+import { Resend } from 'resend';
+
+const resend = new Resend(process.env.RESEND);
 
 export default async function handler(req, res) {
   let { email } = req.query;
@@ -32,7 +35,12 @@ export default async function handler(req, res) {
 
   let session = user.sessions[user.sessions.length - 1];
 
-  console.log(session.id);
+  resend.emails.send({
+    from: 'onboarding@resend.dev',
+    to: user.email,
+    subject: 'Login to Friction',
+    html: `Your code to login is <i>${session.id}</i>.`
+  });
 
   res.json({ success: true });
 }

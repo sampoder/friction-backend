@@ -18,6 +18,7 @@
   "homepage": "https://github.com/sampoder/treehacks-backend#readme",
   "dependencies": {
     "@prisma/client": "^5.9.1",
-    "prisma": "^5.9.1"
+    "prisma": "^5.9.1",
+    "resend": "^3.2.0"
   }
 }
