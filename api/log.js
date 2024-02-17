@@ -17,7 +17,7 @@ function getStartOfDayInTimezone(timezoneOffset) {
     return currentTimezoneDate;
 }
 
-export async function groupStatus(group){
+export async function groupStatus(group, user){
   let scrolls = await prisma.scroll.findMany({
     where: {
       user: {
@@ -57,7 +57,8 @@ export async function groupStatus(group){
     sum,
     blame,
     friction,
-    success: true
+    success: true,
+    user
   }
 }
 
@@ -90,5 +91,5 @@ export default async function handler(req, res) {
     data: { distance: parseInt(distance), userId: user.id },
   });
 
-  res.json(await groupStatus(user.group));
+  res.json(await groupStatus(user.group, user));
 }

@@ -42,5 +42,5 @@ export default async function handler(req, res) {
     }
   });
 
-  res.json(await groupStatus(group));
+  res.json(await groupStatus(group, user));
 }

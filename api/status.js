@@ -26,5 +26,5 @@ export default async function handler(req, res) {
     return res.json({ success: false });
   }
 
-  res.json(await groupStatus(user.group));
+  res.json(await groupStatus(user.group, user));
 }
