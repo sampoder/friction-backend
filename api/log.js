@@ -29,15 +29,34 @@ export async function groupStatus(group){
     }
   })
   
+  // Delete scrolls that are irrelevant
+  /*
+  await prisma.scroll.deleteMany({
+    where: {
+      user: {
+        groupId: group.id
+      },
+      createdAt: {
+        lt: getStartOfDayInTimezone(group.tzOffset)
+      },
+    }
+  })*/
+  
   let sum = 0
+  let blame = {}
   
   scrolls.map(scroll => {
     sum += scroll.distance
+    blame[scroll.userId] = blame[scroll.userId] ? blame[scroll.userId] + 1 : 1
   })
+  
+  let friction = sum - (((new Date()).getTime() - getStartOfDayInTimezone(group.tzOffset)) / 1000)
   
   return {
     group,
-    sum
+    sum,
+    blame,
+    friction
   }
 }
 
@@ -51,7 +70,11 @@ export default async function handler(req, res) {
       include: {
         user: {
           include: {
-            group: true
+            group: {
+              include: {
+                users: true
+              }
+            }
           }
         },
       },

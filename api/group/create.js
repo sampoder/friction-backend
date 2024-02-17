@@ -11,7 +11,11 @@ export default async function handler(req, res) {
       include: {
         user: {
           include: {
-            group: true
+            group: {
+              include: {
+                users: true
+              }
+            }
           }
         },
       },
@@ -25,7 +29,10 @@ export default async function handler(req, res) {
       users: {
         connect: { id: user.id },
       },
-     },
+    },
+    include: {
+      users: true
+    }
   });
 
   res.json(await groupStatus(group));
