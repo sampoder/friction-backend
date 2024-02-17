@@ -1,5 +1,5 @@
-import prisma from "../../lib/prisma";
-import { groupStatus } from "../log";
+import prisma from "../lib/prisma";
+import { groupStatus } from "./log";
 
 export default async function handler(req, res) {
   let { session } = req.query;
@@ -18,15 +18,5 @@ export default async function handler(req, res) {
     })
   ).user;
 
-  let group = await prisma.group.create({
-    data: { 
-      code: Math.random().toString(),
-      tzOffset: 0,
-      users: {
-        connect: { id: user.id },
-      },
-     },
-  });
-
-  res.json(await groupStatus(group));
+  res.json(await groupStatus(user.group));
 }

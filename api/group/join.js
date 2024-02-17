@@ -1,4 +1,5 @@
 import prisma from "../../lib/prisma";
+import { groupStatus } from "../log";
 
 export default async function handler(req, res) {
   let { session, code } = req.query;
@@ -35,5 +36,5 @@ export default async function handler(req, res) {
     },
   });
 
-  res.json(group);
+  res.json(await groupStatus(group));
 }

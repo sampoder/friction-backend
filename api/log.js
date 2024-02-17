@@ -17,6 +17,30 @@ function getStartOfDayInTimezone(timezoneOffset) {
     return currentTimezoneDate;
 }
 
+export async function groupStatus(group){
+  let scrolls = await prisma.scroll.findMany({
+    where: {
+      user: {
+        groupId: group.id
+      },
+      createdAt: {
+        gte: getStartOfDayInTimezone(group.tzOffset)
+      },
+    }
+  })
+  
+  let sum = 0
+  
+  scrolls.map(scroll => {
+    sum += scroll.distance
+  })
+  
+  return {
+    group,
+    sum
+  }
+}
+
 export default async function handler(req, res) {
   let { session, distance } = req.query;
   let user = (
@@ -37,23 +61,6 @@ export default async function handler(req, res) {
   let log = await prisma.scroll.create({
     data: { distance: parseInt(distance), userId: user.id },
   });
-  
-  let scrolls = await prisma.scroll.findMany({
-    where: {
-      user: {
-        groupId: user.groupId
-      },
-      createdAt: {
-        gte: getStartOfDayInTimezone(user.group.tzOffset)
-      },
-    }
-  })
-  
-  let sum = 0
-  
-  scrolls.map(scroll => {
-    sum += scroll.distance
-  })
 
-  res.json(sum);
+  res.json(await groupStatus(user.group));
 }
