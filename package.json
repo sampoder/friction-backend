@@ -1,0 +1,23 @@
+{
+  "name": "treehacks-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sampoder/treehacks-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sampoder/treehacks-backend/issues"
+  },
+  "homepage": "https://github.com/sampoder/treehacks-backend#readme",
+  "dependencies": {
+    "@prisma/client": "^5.9.1",
+    "prisma": "^5.9.1"
+  }
+}
