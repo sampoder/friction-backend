@@ -130,5 +130,5 @@ export default async function handler(req, res) {
     data: { distance: parseInt(distance), userId: user.id },
   });
 
-  res.json(await groupStatus(user.group, user));
+  res.status(200).json(await groupStatus(user.group, user));
 }
