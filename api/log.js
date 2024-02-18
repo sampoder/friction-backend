@@ -102,8 +102,7 @@ export async function groupStatus(group, user){
 }
 
 export default async function handler(req, res) {
-  console.log(req.body)
-  let { session, distance } = req.body;
+  let { session, distance } = req.query;
   let user = (
     await prisma.session.findUnique({
       where: {
