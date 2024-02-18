@@ -13,6 +13,7 @@ function isTimeBetween(start_time_str, end_time_str, timezoneOffset) {
     endTime.setMinutes(parseInt(endTimeParts[1]));
 
     // Get current time
+    let currentDate = new Date();
     let timezoneOffsetMillis = timezoneOffset * 60 * 60 * 1000;
     let currentTimezoneDate = new Date(currentDate.getTime() + timezoneOffsetMillis);
 
