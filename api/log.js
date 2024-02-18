@@ -47,7 +47,7 @@ export async function groupStatus(group, user){
   
   scrolls.map(scroll => {
     sum += scroll.distance
-    blame[scroll.userId] = blame[scroll.userId] ? blame[scroll.userId] + 1 : 1
+    blame[scroll.userId] = blame[scroll.userId] ? blame[scroll.userId] + scroll.distance : scroll.distance
   })
   
   let friction = sum - (((new Date()).getTime() - getStartOfDayInTimezone(group.tzOffset)) / 1000)
