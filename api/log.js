@@ -1,5 +1,30 @@
 import prisma from "../lib/prisma";
 
+function isTimeBetween(start_time_str, end_time_str, timezone_offset) {
+    // Parse time strings
+    let startTimeParts = start_time_str.split(':');
+    let endTimeParts = end_time_str.split(':');
+    let startTime = new Date();
+    startTime.setHours(parseInt(startTimeParts[0]) + timezone_offset);
+    startTime.setMinutes(parseInt(startTimeParts[1]));
+    
+    let endTime = new Date();
+    endTime.setHours(parseInt(endTimeParts[0]) + timezone_offset);
+    endTime.setMinutes(parseInt(endTimeParts[1]));
+
+    // Get current time
+    let currentTime = new Date();
+    currentTime.setHours(currentTime.getHours() + timezone_offset);
+
+    // If end time is before start time within the same day, adjust end time to the next day
+    if (endTime < startTime) {
+        endTime.setDate(endTime.getDate() + 1);
+    }
+
+    // Check if current time is not between start and end time
+    return !(currentTime >= startTime && currentTime <= endTime);
+}
+
 function getStartOfDayInTimezone(timezoneOffset) {
     // Get current date in UTC
     let currentDate = new Date();
@@ -51,6 +76,10 @@ export async function groupStatus(group, user){
   })
   
   let friction = sum - (((new Date()).getTime() - getStartOfDayInTimezone(group.tzOffset)) / 1000)
+  
+  if(isTimeBetween(group.startBreak, group.endBreak, group.tzOffset)){
+    friction = 50
+  }
   
   return {
     group,
