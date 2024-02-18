@@ -42,5 +42,7 @@ model Group {
   id       Int    @id @default(autoincrement())
   code     String @unique
   users    User[]
-  tzOffset Int
+  tzOffset Float
+  startBreak String?
+  endBreak String?
 }

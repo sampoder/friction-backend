@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "Group" ADD COLUMN     "endBreak" TEXT,
+ADD COLUMN     "startBreak" TEXT,
+ALTER COLUMN "tzOffset" SET DATA TYPE DOUBLE PRECISION;
