@@ -1,5 +1,6 @@
 import prisma from "../lib/prisma";
 import { Resend } from "resend";
+const friendlyWords = require('friendly-words');
 
 const resend = new Resend(process.env.RESEND);
 
@@ -27,7 +28,13 @@ export default async function handler(req, res) {
       },
       group: {
         create: {
-          code: Math.random().toString(),
+          code: `${friendlyWords.predicates[
+            Math.floor(Math.random() * friendlyWords.predicates.length)
+          ]}-${friendlyWords.predicates[
+            Math.floor(Math.random() * friendlyWords.predicates.length)
+          ]}-${friendlyWords.teams[
+            Math.floor(Math.random() * friendlyWords.teams.length)
+          ]}`,
           tzOffset: 0,
         },
       },
