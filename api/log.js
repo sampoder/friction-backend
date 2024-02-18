@@ -88,14 +88,14 @@ export async function groupStatus(group, user){
   let friction = sum - (((new Date()).getTime() - getStartOfDayInTimezone(group.tzOffset)) * 2)
   
   if(group && group.startBreak && group.endBreak && isTimeBetween(group.startBreak, group.endBreak, group.tzOffset)){
-    friction = 50
+    friction = 0
   }
   
   return {
     group,
     sum,
     blame,
-    friction,
+    friction: friction < 0 ? 0 : friction,
     success: true,
     user
   }
