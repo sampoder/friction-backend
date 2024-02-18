@@ -24,7 +24,7 @@ export default async function handler(req, res) {
   
   let group = await prisma.group.update({
     where: { id: user.group.id },
-    data: { tzOffset, startBreak, endBreak },
+    data: { tzOffset: parseFloat(tzOffset), startBreak, endBreak },
     include: {
       users: true
     }
