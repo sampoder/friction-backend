@@ -85,7 +85,7 @@ export async function groupStatus(group, user){
     blame[scroll.userId] = blame[scroll.userId] ? blame[scroll.userId] + scroll.distance : scroll.distance
   })
   
-  let friction = sum - ((((new Date()).getTime() - getStartOfDayInTimezone(group.tzOffset))) * 2)
+  let friction = sum - ((((new Date()).getTime() - getStartOfDayInTimezone(group.tzOffset))) * group.users.length)
   
   if(group && group.startBreak && group.endBreak && isTimeBetween(group.startBreak, group.endBreak, group.tzOffset)){
     friction = 0
