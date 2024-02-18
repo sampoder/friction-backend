@@ -29,6 +29,13 @@ export default async function handler(req, res) {
   user = await prisma.user.update({
     where: { id: user.id },
     data: { email, image, name },
+    include: {
+      group: {
+        include: {
+          users: true
+        }
+      }
+    }
   })
 
   res.json(await groupStatus(user.group, user));
