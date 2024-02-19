@@ -58,9 +58,6 @@ export async function groupStatus(group, user){
       user: {
         groupId: group.id
       },
-      createdAt: {
-        gte: getStartOfDayInTimezone(group.tzOffset)
-      },
     }
   })
   
